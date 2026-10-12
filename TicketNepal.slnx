@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/TicketNepal.SharedKernel/TicketNepal.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/Host/">
+    <Project Path="src/Host/TicketNepal.Api/TicketNepal.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Events/">
+    <Project Path="src/Modules/Events/TicketNepal.Events.Application/TicketNepal.Events.Application.csproj" />
+    <Project Path="src/Modules/Events/TicketNepal.Events.Domain/TicketNepal.Events.Domain.csproj" />
+    <Project Path="src/Modules/Events/TicketNepal.Events.Infrastructure/TicketNepal.Events.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/TicketNepal.Identity.Application/TicketNepal.Identity.Application.csproj" />
+    <Project Path="src/Modules/Identity/TicketNepal.Identity.Domain/TicketNepal.Identity.Domain.csproj" />
+    <Project Path="src/Modules/Identity/TicketNepal.Identity.Infrastructure/TicketNepal.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TicketNepal.Api.Tests/TicketNepal.Api.Tests.csproj" />
+  </Folder>
+</Solution>
