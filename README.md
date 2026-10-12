@@ -2,6 +2,6 @@
 
 # TicketNepal
 
-Event ticketing platform: browse events, pick seats, pay via eSewa / Khalti, get QR tickets.
+[![CI](https://github.com/<your-username>/ticketnepal/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/ticketnepal/actions/workflows/ci.yml)
 
-> Work in progress. Live demo, architecture diagram and demo video coming.
+Event ticketing platform: browse events, pick seats, pay via eSewa / Khalti, get QR tickets.
