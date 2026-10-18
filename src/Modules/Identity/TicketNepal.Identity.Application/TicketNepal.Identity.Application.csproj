@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TicketNepal.Identity.Domain\TicketNepal.Identity.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\TicketNepal.Application.Core\TicketNepal.Application.Core.csproj" />
   </ItemGroup>
 
 </Project>
