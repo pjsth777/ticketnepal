@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using TicketNepal.Api.Health;
 using TicketNepal.Events.Infrastructure;
+using TicketNepal.Application.Core.Http;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -23,6 +24,8 @@ try
 
     builder.Services.AddProblemDetails();
     builder.Services.AddSingleton(TimeProvider.System);
+    builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
+    builder.Services.AddProblemDetails();
 
     var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
     builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy

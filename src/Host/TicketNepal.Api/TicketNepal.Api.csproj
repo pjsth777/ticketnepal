@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Events\TicketNepal.Events.Infrastructure\TicketNepal.Events.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\TicketNepal.Application.Core\TicketNepal.Application.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

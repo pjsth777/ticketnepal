@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/TicketNepal.Application.Core/TicketNepal.Application.Core.csproj" />
     <Project Path="src/BuildingBlocks/TicketNepal.SharedKernel/TicketNepal.SharedKernel.csproj" />
   </Folder>
   <Folder Name="/src/Host/">
