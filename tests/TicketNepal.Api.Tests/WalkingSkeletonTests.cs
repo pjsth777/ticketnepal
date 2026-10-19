@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace TicketNepal.Api.Tests;
 
-public class WalkingSkeletonTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+[Collection(ApiCollection.Name)]
+public class WalkingSkeletonTests(ApiFactory factory)
 {
     private readonly HttpClient _client = factory.CreateClient();
 
