@@ -3,9 +3,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Events\TicketNepal.Events.Infrastructure\TicketNepal.Events.Infrastructure.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\TicketNepal.Application.Core\TicketNepal.Application.Core.csproj" />
+    <ProjectReference Include="..\..\Modules\Identity\TicketNepal.Identity.Infrastructure\TicketNepal.Identity.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Npgsql" />
     <PackageReference Include="Serilog.AspNetCore" />
   </ItemGroup>

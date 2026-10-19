@@ -1,6 +1,6 @@
 namespace TicketNepal.SharedKernel.Security;
 
-public static class Role
+public static class Roles
 {
     public const string Attendee = "Attendee";
     public const string Organizer = "Organizer";

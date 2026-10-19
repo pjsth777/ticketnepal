@@ -20,5 +20,6 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/TicketNepal.Api.Tests/TicketNepal.Api.Tests.csproj" />
+    <Project Path="tests/TicketNepal.Identity.Tests/TicketNepal.Identity.Tests.csproj" />
   </Folder>
 </Solution>

@@ -3,6 +3,7 @@ using Serilog;
 using TicketNepal.Api.Health;
 using TicketNepal.Events.Infrastructure;
 using TicketNepal.Application.Core.Http;
+using TicketNepal.Identity.Infrastructure;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -26,7 +27,7 @@ try
     builder.Services.AddSingleton(TimeProvider.System);
     builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
     builder.Services.AddProblemDetails();
-
+;
     var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
     builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy
         .WithOrigins(allowedOrigins)
@@ -37,8 +38,11 @@ try
         .AddCheck<PostgresHealthCheck>("postgres", tags: ["ready"]);
 
     builder.Services.AddEventsModule(builder.Configuration);
+    builder.Services.AddIdentityModule(builder.Configuration);
 
     var app = builder.Build();
+
+    await app.Services.InitializeIdentityModuleAsync();
 
     app.UseSerilogRequestLogging();
     app.UseExceptionHandler();
