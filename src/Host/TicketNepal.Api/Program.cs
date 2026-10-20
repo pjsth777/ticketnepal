@@ -56,6 +56,7 @@ try
     });
 
     app.MapEventsModule();
+    app.MapIdentityModule();
     app.Run();
 }
 catch (Exception ex) when (ex is not HostAbortedException)
