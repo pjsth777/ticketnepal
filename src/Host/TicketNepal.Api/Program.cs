@@ -48,6 +48,8 @@ try
     app.UseExceptionHandler();
     app.UseStatusCodePages();
     app.UseCors();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false });
     app.MapHealthChecks("/health/ready", new HealthCheckOptions

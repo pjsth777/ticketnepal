@@ -15,6 +15,12 @@ using Microsoft.Extensions.DependencyInjection;
 using TicketNepal.Identity.Domain;
 using TicketNepal.Identity.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using TicketNepal.Identity.Infrastructure.Security;
+using TicketNepal.SharedKernel.Security;
+using System.Security.Claims;
 
 namespace TicketNepal.Identity.Infrastructure;
 
@@ -46,6 +52,7 @@ public static class IdentityModule
         })
         .AddRoles<IdentityRole<Guid>>()
         .AddEntityFrameworkStores<AppIdentityDbContext>()
+        .AddSignInManager()
         .AddDefaultTokenProviders();
 
         services.AddModuleApplication(typeof(IdentityErrors).Assembly);
@@ -68,6 +75,40 @@ public static class IdentityModule
             services.AddSingleton<IEmailSender, LoggingEmailSender>();
         }
 
+        services.AddOptions<JwtOptions>()
+            .Bind(configuration.GetSection(JwtOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddSingleton<ITokenService, TokenService>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<TokenIssuer>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+
+        services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+            .Configure<IOptions<JwtOptions>>((bearer, jwtOptions) =>
+            {
+                var jwt = jwtOptions.Value;
+                bearer.MapInboundClaims = false;
+                bearer.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwt.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwt.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Secret)),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(30),
+                    NameClaimType = "sub",
+                    RoleClaimType = "role"
+                };
+            });
+
+        services.AddAuthorizationBuilder()
+            .AddPolicy(Policies.RequireAdmin, policy => policy.RequireRole(Roles.Admin));
+
         return services;
     }
 
@@ -84,6 +125,17 @@ public static class IdentityModule
         var group = app.MapGroup("/api/v1/auth").WithTags("Auth");
         Register.MapEndpoint(group);
         ConfirmEmail.MapEndpoint(group);
+        Login.MapEndpoint(group);
+        Refresh.MapEndpoint(group);
+        Logout.MapEndpoint(group);
+
+        group.MapGet("/me", (ClaimsPrincipal user) => Results.Ok(new
+        {
+            id = user.FindFirst("sub")?.Value,
+            email = user.FindFirst("email")?.Value,
+            roles = user.FindAll("role").Select(c => c.Value)
+        })).RequireAuthorization();
+
         return app;
     }
 }
